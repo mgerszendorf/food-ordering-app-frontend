@@ -6,11 +6,11 @@ import store from "./store/store";
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
+    <div className="App">
+      <Provider store={store}>
         <Root />
-      </div>
-    </Provider>
+      </Provider>
+    </div>
   );
 }
 
