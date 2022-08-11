@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PizzaIcon from "../assets/images/Pizza.svg";
 import BurgerIcon from "../assets/images/Burger.svg";
 import BurritoIcon from "../assets/images/Burrito.svg";
 import HotDogIcon from "../assets/images/HotDog.svg";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import SelectedCategory from "../components/SelectedCategory";
+import { motion } from "framer-motion";
 
 interface IFoodCategory {
   id: number;
@@ -12,7 +14,13 @@ interface IFoodCategory {
 }
 
 function Home() {
-  const [position, setPosition] = useState<number>(0);
+  const [activeCategory, setActiveCategory] = useState<number>(0);
+  const [width, setWidth] = useState(0);
+  const carousel = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  useEffect(() => {
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+  }, []);
 
   const foodCategories = [
     {
@@ -37,53 +45,46 @@ function Home() {
     },
   ];
 
-  const onLeft = () => {
-    if (position > 0) {
-      setPosition(position - 1);
-    }
-  };
-
-  const onRight = () => {
-    if (position < foodCategories?.length - 1) {
-      setPosition(position + 1);
-    }
-  };
-
   return (
     <section className="home">
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search here"
-          onFocus={(e) => (e.target.placeholder = "")}
-          onBlur={(e) => (e.target.placeholder = "Search here")}
-        />
-      </div>
-      <div className="category-selection">
-        <div className="left-arrow" onClick={onLeft}>
-          <MdKeyboardArrowLeft />
+      <div className="tablet-row">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search here"
+            onFocus={(e) => (e.target.placeholder = "")}
+            onBlur={(e) => (e.target.placeholder = "Search here")}
+          />
         </div>
-        {foodCategories?.map((category: IFoodCategory, key) => (
-          <div
-            className="category"
-            style={position === key ? { display: "flex" } : undefined}
+        <motion.div ref={carousel} className="carousel">
+          <motion.div
+            drag="x"
+            dragConstraints={{ right: 0, left: -width }}
+            whileTap={{ cursor: "grabbing" }}
+            className="inner-carousel"
           >
-            <img src={category?.img} alt={category?.text} />
-            <p
-              style={
-                position === key
-                  ? { borderBottom: "2px solid #3458e4", color: "#3458e4" }
-                  : undefined
-              }
-            >
-              {category?.text}
-            </p>
-          </div>
-        ))}
-        <div className="right-arrow" onClick={onRight}>
-          <MdKeyboardArrowRight />
-        </div>
+            {foodCategories?.map((category: IFoodCategory, key) => (
+              <motion.div
+                className="item"
+                key={key}
+                onClick={() => setActiveCategory(key)}
+              >
+                <img src={category?.img} alt={category?.text} />
+                <p
+                  style={
+                    activeCategory === key
+                      ? { borderBottom: "2px solid #3458e4", color: "#3458e4" }
+                      : undefined
+                  }
+                >
+                  {category?.text}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
+      <SelectedCategory />
     </section>
   );
 }
