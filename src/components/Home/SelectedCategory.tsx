@@ -1,5 +1,5 @@
 import React from "react";
-import pizza from "../assets/images/pizza.png";
+import pizza from "../../assets/images/pizza.png";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 interface SelectedCategoryProps {}
