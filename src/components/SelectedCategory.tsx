@@ -1,5 +1,6 @@
 import React from "react";
 import pizza from "../assets/images/pizza.png";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 interface SelectedCategoryProps {}
 
@@ -11,8 +12,7 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
       id: 0,
       img: pizza,
       title: "Red N Hot (Thin Crust)",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus deleniti ipsam, quam optio reiciendis. Odio vitae, nam, saepe quis exercitationem ullam, voluptates rem sed quisquam blanditiis rerum nostrum libero?",
+      description: "Spicy chicken, beef, onions, tomatoes, green chilies.",
       price: 25.0,
       isPopular: true,
     },
@@ -22,8 +22,7 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
       id: 1,
       img: pizza,
       title: "Red N Hot (Thin Crust)",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus deleniti ipsam, quam optio reiciendis. Odio vitae, nam, saepe quis exercitationem ullam, voluptates rem sed quisquam blanditiis rerum nostrum libero?",
+      description: "Spicy chicken, beef, onions, tomatoes, green chilies.",
       price: 25.0,
       isPopular: true,
     },
@@ -33,8 +32,7 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
       id: 2,
       img: pizza,
       title: "Red N Hot (Thin Crust)",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus deleniti ipsam, quam optio reiciendis. Odio vitae, nam, saepe quis exercitationem ullam, voluptates rem sed quisquam blanditiis rerum nostrum libero?",
+      description: "Spicy chicken, beef, onions, tomatoes, green chilies.",
       price: 25.0,
       isPopular: true,
     },
@@ -44,8 +42,7 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
       id: 3,
       img: pizza,
       title: "Red N Hot (Thin Crust)",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus deleniti ipsam, quam optio reiciendis. Odio vitae, nam, saepe quis exercitationem ullam, voluptates rem sed quisquam blanditiis rerum nostrum libero?",
+      description: "Spicy chicken, beef, onions, tomatoes, green chilies.",
       price: 25.0,
       isPopular: false,
     },
@@ -55,8 +52,7 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
       id: 4,
       img: pizza,
       title: "Red N Hot (Thin Crust)",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus deleniti ipsam, quam optio reiciendis. Odio vitae, nam, saepe quis exercitationem ullam, voluptates rem sed quisquam blanditiis rerum nostrum libero?",
+      description: "Spicy chicken, beef, onions, tomatoes, green chilies.",
       price: 25.0,
       isPopular: false,
     },
@@ -70,8 +66,8 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
         <div className="popular-products-container">
           {products
             ?.filter((product) => product?.isPopular === true)
-            ?.map((product) => (
-              <div className="element">
+            ?.map((product, key) => (
+              <div className="element" key={key}>
                 <div className="element-img">
                   <img src={product?.img} alt={product?.categoryName} />
                 </div>
@@ -80,7 +76,9 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
                   <p>{product?.description}</p>
                 </div>
                 <div className="element-price">
-                  <p className="price">{`$${product?.price}`}</p>
+                  <p className="price">{`$${parseFloat(
+                    String(product?.price)
+                  ).toFixed(2)}`}</p>
                   <p className="add-to-cart">Add to cart</p>
                 </div>
               </div>
@@ -90,24 +88,26 @@ const SelectedCategory: React.FC<SelectedCategoryProps> = () => {
 
       <div className="all-products">
         <div className="header">
-          <h2>All</h2>
-          <div className="sort">
-            <p>Sort by</p>
+          <h2>All products</h2>
+          <div className="sort-wrapper">
+            <p>Sort by:</p>
+            <div className="sort">
+              <p>Price</p>
+              <MdOutlineKeyboardArrowDown />
+            </div>
           </div>
         </div>
-        {products?.map((product) => (
-          <div className="product">
+        {products?.map((product, key) => (
+          <div className="product" key={key}>
             <div className="product-img">
               <img src={product?.img} alt={product?.categoryName} />
             </div>
-            <div className="product-title">
-              <p>{product?.title}</p>
-            </div>
-            <div className="product-price">
-              <p>{`$${product?.price}`}</p>
-            </div>
-            <div className="add-to-cart">
-              <p>Add to cart</p>
+            <div className="product-information">
+              <h3 className="product-title">{product?.title}</h3>
+              <div className="price-container">
+                <p>{`$${parseFloat(String(product?.price)).toFixed(2)}`}</p>
+                <p className="add-to-cart">Add to cart</p>
+              </div>
             </div>
           </div>
         ))}

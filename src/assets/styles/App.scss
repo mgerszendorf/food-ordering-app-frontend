@@ -3,6 +3,7 @@
 @import url(./components/Sidebar/Sidebar.scss);
 @import url(./pages/MobileMenu.scss);
 @import url(./pages/Home.scss);
+@import url(./components/SelectedCategory.scss);
 
 * {
   margin: 0;
@@ -12,4 +13,10 @@
   text-decoration: none;
   list-style: none;
   font-family: "Poppins", sans-serif;
+}
+
+@media all and (min-width: 1024px) {
+  .App {
+    display: flex;
+  }
 }
