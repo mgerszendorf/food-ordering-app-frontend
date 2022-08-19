@@ -1,9 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { menuState } from "./reducers/reducers";
+import {
+  menuState,
+  sidebarSlidingElementState,
+} from "./reducers/navigationElementsReducer";
+
+import {
+  signInState,
+  signUpState,
+  forgotPasswordState,
+} from "./reducers/authenticationPopupsReducer";
 
 const store = configureStore({
   reducer: {
-    menuState: menuState,
+    sidebarSlidingElementState,
+    menuState,
+    signInState,
+    signUpState,
+    forgotPasswordState,
   },
 });
 

@@ -1,11 +1,33 @@
 import React from "react";
 import { GrClose } from "react-icons/gr";
+import { useDispatch } from "react-redux";
+import {
+  hideForgotPassword,
+  hideSignIn,
+  hideSignUp,
+  showForgotPassword,
+  showSignUp,
+} from "../../store/actions/authenticationPopupsAction";
 
 function SignIn() {
+  const dispatch = useDispatch();
+
+  function handleForgotPassword() {
+    dispatch(showForgotPassword());
+    dispatch(hideSignIn());
+    dispatch(hideSignUp());
+  }
+
+  function handleSignUp() {
+    dispatch(showSignUp());
+    dispatch(hideSignIn());
+    dispatch(hideForgotPassword());
+  }
+
   return (
     <section className="sign-in-wrapper">
       <div className="sign-in">
-        <div className="close-btn">
+        <div className="close-btn" onClick={() => dispatch(hideSignIn())}>
           <GrClose />
         </div>
         <h2>Welcome back</h2>
@@ -32,8 +54,8 @@ function SignIn() {
             />
           </label>
           <div className="row">
-            <p>Forgot password</p>
-            <p>Sign up</p>
+            <p onClick={() => handleForgotPassword()}>Forgot password</p>
+            <p onClick={() => handleSignUp()}>Sign up</p>
           </div>
 
           <button>Sign in</button>
