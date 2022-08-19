@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Store } from "../store/types";
-import { toggleMenu } from "../store/actions/actions";
+import { toggleMenu } from "../store/actions/navigationElementsAction";
 import { Link } from "react-router-dom";
 import userImg from "../assets/images/user.png";
 import { FaSignOutAlt } from "react-icons/fa";

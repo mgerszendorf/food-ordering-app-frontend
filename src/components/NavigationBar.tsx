@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { toggleMenu } from "../store/actions/actions";
+import { toggleMenu } from "../store/actions/navigationElementsAction";
 
 function NavigationBar() {
   const dispatch = useDispatch();
