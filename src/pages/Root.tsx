@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import NavigationBar from "../components/NavigationBar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { Store } from "../store/types";
@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
 import ForgotPassword from "./Authentication/ForgotPassword";
+import Message from "../components/Message";
 
 function Root() {
   const menuState = useSelector((state: Store) => state.menuState);
@@ -35,6 +36,7 @@ function Root() {
           {forgotPasswordState && !signInState && !signUpState && (
             <ForgotPassword />
           )}
+          <Message />
         </>
       )}
     </>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { GrClose } from "react-icons/gr";
 import { useDispatch } from "react-redux";
+import { signin, signInWithGoogle } from "../../store/actions/authAction";
 import {
   hideForgotPassword,
   hideSignIn,
@@ -8,8 +9,11 @@ import {
   showForgotPassword,
   showSignUp,
 } from "../../store/actions/authenticationPopupsAction";
+import { connect } from "react-redux";
 
-function SignIn() {
+const SignIn = ({ signin, signInWithGoogle }: any) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   function handleForgotPassword() {
@@ -24,6 +28,11 @@ function SignIn() {
     dispatch(hideForgotPassword());
   }
 
+  function signInUserOnSubmit(e: any) {
+    e.preventDefault();
+    signin(email, password);
+  }
+
   return (
     <section className="sign-in-wrapper">
       <div className="sign-in">
@@ -32,7 +41,7 @@ function SignIn() {
         </div>
         <h2>Welcome back</h2>
         <p className="welcome-txt">Welcome back! Please enter your details.</p>
-        <form action="">
+        <form onSubmit={signInUserOnSubmit}>
           <label htmlFor="email">
             Email
             <input
@@ -41,6 +50,7 @@ function SignIn() {
               placeholder="Enter your email"
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "Enter your email")}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
           <label htmlFor="password">
@@ -51,6 +61,7 @@ function SignIn() {
               placeholder="Enter your password"
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "Enter your password")}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
           <div className="row">
@@ -59,11 +70,21 @@ function SignIn() {
           </div>
 
           <button>Sign in</button>
-          <button>Sign in with Google</button>
         </form>
+        <button className="google-btn" onClick={() => signInWithGoogle()}>
+          Sign in with Google
+        </button>
       </div>
     </section>
   );
+};
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    signin: (email: string, password: string) =>
+      dispatch(signin(email, password)),
+    signInWithGoogle: () => dispatch(signInWithGoogle()),
+  };
 }
 
-export default SignIn;
+export default connect(null, mapDispatchToProps)(SignIn);

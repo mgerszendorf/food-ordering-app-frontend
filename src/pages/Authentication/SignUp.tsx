@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { GrClose } from "react-icons/gr";
 import { useDispatch } from "react-redux";
 import {
@@ -6,14 +6,24 @@ import {
   hideSignUp,
   showSignIn,
 } from "../../store/actions/authenticationPopupsAction";
+import { signup, signInWithGoogle } from "../../store/actions/authAction";
+import { connect } from "react-redux";
 
-function SignUp() {
+const SignUp = ({ signup, signInWithGoogle }: any) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const dispatch = useDispatch();
 
   function handleSignIn() {
     dispatch(showSignIn());
     dispatch(hideForgotPassword());
     dispatch(hideSignUp());
+  }
+
+  function signUpUserOnSubmit(e: any) {
+    e.preventDefault();
+    signup(email, password, name);
   }
 
   return (
@@ -26,15 +36,16 @@ function SignUp() {
         <p className="welcome-txt">
           Create an account and stay with us for longer.
         </p>
-        <form action="">
+        <form onSubmit={signUpUserOnSubmit}>
           <label htmlFor="name">
             Name
             <input
-              type="email"
-              name="email"
+              type="text"
+              name="text"
               placeholder="Enter your name"
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "Enter your name")}
+              onChange={(e) => setName(e.target.value)}
             />
           </label>
           <label htmlFor="email">
@@ -45,6 +56,7 @@ function SignUp() {
               placeholder="Enter your email"
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "Enter your email")}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
           <label htmlFor="password">
@@ -55,6 +67,7 @@ function SignUp() {
               placeholder="Enter your password"
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "Enter your password")}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
           <p className="sign-in-btn" onClick={() => handleSignIn()}>
@@ -62,11 +75,21 @@ function SignUp() {
           </p>
 
           <button>Create account</button>
-          <button>Sign up with Google</button>
         </form>
+        <button className="google-btn" onClick={() => signInWithGoogle()}>
+          Sign up with Google
+        </button>
       </div>
     </section>
   );
+};
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    signup: (email: string, password: string, name: string) =>
+      dispatch(signup(email, password, name)),
+    signInWithGoogle: () => dispatch(signInWithGoogle()),
+  };
 }
 
-export default SignUp;
+export default connect(null, mapDispatchToProps)(SignUp);

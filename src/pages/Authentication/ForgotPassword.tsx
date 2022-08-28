@@ -1,4 +1,3 @@
-import React from "react";
 import { GrClose } from "react-icons/gr";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
