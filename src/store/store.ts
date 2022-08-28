@@ -3,12 +3,16 @@ import {
   menuState,
   sidebarSlidingElementState,
 } from "./reducers/navigationElementsReducer";
-
 import {
   signInState,
   signUpState,
   forgotPasswordState,
 } from "./reducers/authenticationPopupsReducer";
+import authState from "./reducers/authReducer";
+import {
+  errorMessageState,
+  successMessageState,
+} from "./reducers/callingMessageReducer";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +21,14 @@ const store = configureStore({
     signInState,
     signUpState,
     forgotPasswordState,
+    authState,
+    errorMessageState,
+    successMessageState,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export default store;
